@@ -1,7 +1,6 @@
 const ImageCard = ({ img }) => {
-  console.log(img);
   return (
-    <div id={img.id}>
+    <div id={img.id} className="gallery-item">
       <a href={img.urls.full}>
         <img src={img.urls.small} alt={img.slug} />
       </a>

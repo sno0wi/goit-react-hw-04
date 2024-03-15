@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ImageGallery from "./components/ImageGallery/ImageGallery.jsx";
 import SearchBar from "./components/SearchBar/SearchBar.jsx";
+import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn.jsx";
 import "./App.css";
 import axios from "axios";
 
@@ -10,19 +11,20 @@ axios.defaults.baseURL = `https://api.unsplash.com/`;
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [photos, setPhotos] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function fetchData() {
       const params = new URLSearchParams({
         client_id: key,
-        query: searchTerm,
+        query: searchTerm.toLocaleLowerCase(),
         per_page: 10,
-        page: 1,
+        page: page,
       });
 
       try {
         const response = await axios.get(`/search/photos?${params}`);
-        setPhotos(response.data.results);
+        setPhotos((prevPhotos) => [...prevPhotos, ...response.data.results]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -30,14 +32,21 @@ function App() {
     if (searchTerm !== "") {
       fetchData();
     }
-  }, [searchTerm]);
+  }, [searchTerm, page]);
 
-  console.log(photos);
+  const loadMore = async () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
   return (
     <>
       <SearchBar setSearchTerm={setSearchTerm} />
-      <ImageGallery photos={photos} />
+      {photos.length > 0 && (
+        <>
+          <ImageGallery photos={photos} />
+          <LoadMoreBtn loadMore={loadMore} />
+        </>
+      )}
     </>
   );
 }
