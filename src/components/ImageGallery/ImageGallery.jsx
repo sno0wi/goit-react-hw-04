@@ -2,11 +2,11 @@ import ImageCard from "../ImageCard/ImageCard.jsx";
 
 const ImageGallery = ({ photos }) => {
   return (
-    <div className="gallery">
+    <ul className="gallery">
       {photos.map((photo) => (
         <ImageCard img={photo} key={photo.id} />
       ))}
-    </div>
+    </ul>
   );
 };
 export default ImageGallery;

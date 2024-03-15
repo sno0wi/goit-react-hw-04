@@ -1,10 +1,10 @@
 const ImageCard = ({ img }) => {
   return (
-    <div id={img.id} className="gallery-item">
+    <li key={img.id} className="gallery-item">
       <a href={img.urls.full}>
         <img src={img.urls.small} alt={img.slug} />
       </a>
-    </div>
+    </li>
   );
 };
 

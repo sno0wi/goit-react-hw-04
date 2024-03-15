@@ -1,32 +1,33 @@
 import { useEffect, useState } from "react";
+import { requestImg } from "./services/api";
 import ImageGallery from "./components/ImageGallery/ImageGallery.jsx";
 import SearchBar from "./components/SearchBar/SearchBar.jsx";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn.jsx";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage.jsx";
+import Loader from "./components/Loader/Loader.jsx";
 import "./App.css";
-import axios from "axios";
-
-const key = "Qjhh6Cb2QdYGSLBf72MnR8DQudqjygWOgkX801HJ6JY";
-axios.defaults.baseURL = `https://api.unsplash.com/`;
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState(null);
   const [page, setPage] = useState(1);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      const params = new URLSearchParams({
-        client_id: key,
-        query: searchTerm.toLocaleLowerCase(),
-        per_page: 10,
-        page: page,
-      });
-
       try {
-        const response = await axios.get(`/search/photos?${params}`);
-        setPhotos((prevPhotos) => [...prevPhotos, ...response.data.results]);
+        setIsLoading(true);
+        const response = await requestImg({ searchTerm, page });
+        setPhotos((prevPhotos) => {
+          return prevPhotos === null
+            ? response.data.results
+            : [...prevPhotos, ...response.data.results];
+        });
       } catch (error) {
-        console.error("Error fetching data:", error);
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
       }
     }
     if (searchTerm !== "") {
@@ -41,8 +42,10 @@ function App() {
   return (
     <>
       <SearchBar setSearchTerm={setSearchTerm} />
-      {photos.length > 0 && (
+      {isError && <ErrorMessage />}
+      {photos !== null && Array.isArray(photos) && (
         <>
+          {isLoading && <Loader />}
           <ImageGallery photos={photos} />
           <LoadMoreBtn loadMore={loadMore} />
         </>
