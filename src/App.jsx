@@ -32,6 +32,8 @@ function App() {
     }
   }, [searchTerm]);
 
+  console.log(photos);
+
   return (
     <>
       <SearchBar setSearchTerm={setSearchTerm} />
