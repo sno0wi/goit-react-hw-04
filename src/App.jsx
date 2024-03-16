@@ -30,6 +30,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -41,6 +42,7 @@ function App() {
             ? response.data.results
             : [...prevPhotos, ...response.data.results];
         });
+        setTotalPages(response.data.total_pages);
       } catch (error) {
         setIsError(true);
       } finally {
@@ -48,8 +50,6 @@ function App() {
       }
     }
     if (searchTerm !== "") {
-      setPhotos(null);
-      setPage(1);
       fetchData();
     }
   }, [searchTerm, page]);
@@ -76,7 +76,9 @@ function App() {
       {isError && <ErrorMessage />}
       <ImageGallery photos={photos} handleSelectPhoto={handleSelectPhoto} />
       {isLoading && <Loader />}
-      {photos !== null && <LoadMoreBtn loadMore={loadMore} />}
+      {photos !== null && photos.length > 0 && page < totalPages && (
+        <LoadMoreBtn loadMore={loadMore} />
+      )}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
