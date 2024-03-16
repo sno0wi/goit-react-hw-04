@@ -1,11 +1,11 @@
-const ImageCard = ({ img, openModal }) => {
+const ImageCard = ({ img, handleSelectPhoto }) => {
   return (
-    <div key={img.id} className="gallery-item">
+    <div className="gallery-item">
       <img
         src={img.urls.small}
         alt={img.slug}
         onClick={() => {
-          openModal();
+          handleSelectPhoto(img);
         }}
       />
     </div>

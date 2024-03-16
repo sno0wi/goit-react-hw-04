@@ -29,6 +29,7 @@ function App() {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [selectedImg, setSelectedImg] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -59,6 +60,10 @@ function App() {
     setIsOpen(true);
   };
 
+  const handleSelectPhoto = (photo) => {
+    setSelectedImg(photo);
+    openModal();
+  };
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -67,7 +72,7 @@ function App() {
     <>
       <SearchBar setSearchTerm={setSearchTerm} />
       {isError && <ErrorMessage />}
-      <ImageGallery photos={photos} openModal={openModal} />
+      <ImageGallery photos={photos} handleSelectPhoto={handleSelectPhoto} />
       {isLoading && <Loader />}
       {photos !== null && <LoadMoreBtn loadMore={loadMore} />}
       <Modal
@@ -75,7 +80,7 @@ function App() {
         onRequestClose={closeModal}
         style={customStyles}
       >
-        <ImageModal photos={photos} />
+        <ImageModal selectedImg={selectedImg} />
       </Modal>
     </>
   );

@@ -1,13 +1,15 @@
-const ImageModal = ({ photos }) => {
+const ImageModal = ({ selectedImg }) => {
+  console.log(selectedImg);
   return (
     <>
-      {photos !== null &&
-        Array.isArray(photos) &&
-        photos.map((photo) => (
-          <div key={photo.id}>
-            <img />
-          </div>
-        ))}
+      {selectedImg !== null && (
+        <div>
+          <img
+            src={selectedImg.urls.regular}
+            alt={selectedImg.alt_description}
+          />
+        </div>
+      )}
     </>
   );
 };
