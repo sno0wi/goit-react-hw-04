@@ -5,7 +5,22 @@ import SearchBar from "./components/SearchBar/SearchBar.jsx";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn.jsx";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage.jsx";
 import Loader from "./components/Loader/Loader.jsx";
+import ImageModal from "./components/ImageModal/ImageModal.jsx";
+import Modal from "react-modal";
 import "./App.css";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
+Modal.setAppElement("#root");
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,6 +28,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -39,13 +55,28 @@ function App() {
     setPage((prevPage) => prevPage + 1);
   };
 
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   return (
     <>
       <SearchBar setSearchTerm={setSearchTerm} />
       {isError && <ErrorMessage />}
-      <ImageGallery photos={photos} />
+      <ImageGallery photos={photos} openModal={openModal} />
       {isLoading && <Loader />}
       {photos !== null && <LoadMoreBtn loadMore={loadMore} />}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+      >
+        <ImageModal photos={photos} />
+      </Modal>
     </>
   );
 }
