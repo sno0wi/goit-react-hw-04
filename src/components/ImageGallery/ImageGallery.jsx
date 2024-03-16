@@ -1,8 +1,9 @@
 import ImageCard from "../ImageCard/ImageCard.jsx";
+import css from "./ImageGallery.module.css";
 
 const ImageGallery = ({ photos, handleSelectPhoto }) => {
   return (
-    <ul className="gallery">
+    <ul className={css.gallery_list}>
       <li>
         {photos !== null &&
           Array.isArray(photos) &&

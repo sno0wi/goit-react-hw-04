@@ -48,6 +48,8 @@ function App() {
       }
     }
     if (searchTerm !== "") {
+      setPhotos(null);
+      setPage(1);
       fetchData();
     }
   }, [searchTerm, page]);

@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import css from "./SearchBtn.module.css";
 
 const SearchBar = ({ setSearchTerm }) => {
   const inputRef = useRef(null);
@@ -20,8 +21,9 @@ const SearchBar = ({ setSearchTerm }) => {
       <div>
         <Toaster position="top-center" reverseOrder={false} />
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={css.searchForm}>
         <input
+          className={css.searchInput}
           type="text"
           autoComplete="off"
           autoFocus
