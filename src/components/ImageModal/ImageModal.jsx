@@ -1,5 +1,4 @@
 const ImageModal = ({ selectedImg }) => {
-  console.log(selectedImg);
   return (
     <>
       {selectedImg !== null && (
