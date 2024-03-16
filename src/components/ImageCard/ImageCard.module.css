@@ -1,0 +1,10 @@
+.gallery_item {
+    border: 1px solid black;
+    display: flex;
+}
+
+.gallery_img {
+    width: 360px;
+    height: 300px;
+    object-fit: cover;
+}
