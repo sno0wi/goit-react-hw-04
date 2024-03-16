@@ -2,18 +2,17 @@ import { useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import css from "./SearchBtn.module.css";
 
-const SearchBar = ({ setSearchTerm }) => {
+const SearchBar = ({ handleSubmit }) => {
   const inputRef = useRef(null);
 
-  const handleSubmit = (event) => {
+  const onHandleSubmit = (event) => {
     event.preventDefault();
     const searchTerm = inputRef.current.value;
     if (searchTerm === "") {
       toast("Please enter a search term.");
       return;
     }
-    setSearchTerm(searchTerm);
-    inputRef.current.value = "";
+    handleSubmit(searchTerm);
   };
 
   return (
@@ -21,7 +20,7 @@ const SearchBar = ({ setSearchTerm }) => {
       <div>
         <Toaster position="top-center" reverseOrder={false} />
       </div>
-      <form onSubmit={handleSubmit} className={css.searchForm}>
+      <form onSubmit={onHandleSubmit} className={css.searchForm}>
         <input
           className={css.searchInput}
           type="text"

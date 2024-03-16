@@ -62,6 +62,12 @@ function App() {
     setIsOpen(true);
   };
 
+  const handleSubmit = (query) => {
+    setPhotos(null);
+    setPage(1);
+    setSearchTerm(query);
+  };
+
   const handleSelectPhoto = (photo) => {
     setSelectedImg(photo);
     openModal();
@@ -72,7 +78,7 @@ function App() {
 
   return (
     <>
-      <SearchBar setSearchTerm={setSearchTerm} />
+      <SearchBar handleSubmit={handleSubmit} />
       {isError && <ErrorMessage />}
       <ImageGallery photos={photos} handleSelectPhoto={handleSelectPhoto} />
       {isLoading && <Loader />}
