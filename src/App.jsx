@@ -43,13 +43,9 @@ function App() {
     <>
       <SearchBar setSearchTerm={setSearchTerm} />
       {isError && <ErrorMessage />}
-      {photos !== null && Array.isArray(photos) && (
-        <>
-          {isLoading && <Loader />}
-          <ImageGallery photos={photos} />
-          <LoadMoreBtn loadMore={loadMore} />
-        </>
-      )}
+      <ImageGallery photos={photos} />
+      {isLoading && <Loader />}
+      {photos !== null && <LoadMoreBtn loadMore={loadMore} />}
     </>
   );
 }
