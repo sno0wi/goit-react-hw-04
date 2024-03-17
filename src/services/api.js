@@ -7,7 +7,7 @@ export const requestImg = async ({ searchTerm, page }) => {
   const params = new URLSearchParams({
     client_id: key,
     query: searchTerm.toLocaleLowerCase(),
-    per_page: 12,
+    per_page: 6,
     page: page,
   });
   const data = await axios.get(`/search/photos?${params}`);
