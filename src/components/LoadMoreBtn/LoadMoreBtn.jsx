@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import css from "./LoadMoreBtn.module.css";
 
 const LoadMoreBtn = ({ loadMore }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,9 +16,11 @@ const LoadMoreBtn = ({ loadMore }) => {
 
   return (
     <React.Fragment>
-      <button type="button" onClick={handleClick}>
-        {isLoading ? "Loading..." : "Load More"}
-      </button>
+      <div className={css.wrapperBtn}>
+        <button type="button" onClick={handleClick}>
+          {isLoading ? "Loading..." : "Load More"}
+        </button>
+      </div>
     </React.Fragment>
   );
 };
