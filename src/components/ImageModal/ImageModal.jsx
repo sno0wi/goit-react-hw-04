@@ -3,10 +3,11 @@ const ImageModal = ({ selectedImg }) => {
   return (
     <>
       {selectedImg !== null && (
-        <div className={css.imgWrapper}>
+        <div>
           <img
             src={selectedImg.urls.regular}
             alt={selectedImg.alt_description}
+            className={css.img}
           />
         </div>
       )}
