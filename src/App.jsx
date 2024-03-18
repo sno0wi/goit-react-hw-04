@@ -6,22 +6,7 @@ import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn.jsx";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage.jsx";
 import Loader from "./components/Loader/Loader.jsx";
 import ImageModal from "./components/ImageModal/ImageModal.jsx";
-import Modal from "react-modal";
 import "./App.css";
-
-const customStyles = {
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  content: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "hidden",
-  },
-};
-
-Modal.setAppElement("#root");
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -86,13 +71,14 @@ function App() {
       {photos !== null && photos.length > 0 && page < totalPages && (
         <LoadMoreBtn loadMore={loadMore} />
       )}
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-      >
-        <ImageModal selectedImg={selectedImg} />
-      </Modal>
+
+      {selectedImg !== null && (
+        <ImageModal
+          selectedImg={selectedImg}
+          closeModal={closeModal}
+          modalIsOpen={modalIsOpen}
+        />
+      )}
     </>
   );
 }

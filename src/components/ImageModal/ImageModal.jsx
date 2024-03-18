@@ -1,8 +1,28 @@
 import css from "./ImageModal.module.css";
-const ImageModal = ({ selectedImg }) => {
+import Modal from "react-modal";
+
+const customStyles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  content: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+  },
+};
+
+Modal.setAppElement("#root");
+
+const ImageModal = ({ selectedImg, closeModal, modalIsOpen }) => {
   return (
     <>
-      {selectedImg !== null && (
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+      >
         <div>
           <img
             src={selectedImg.urls.regular}
@@ -10,7 +30,7 @@ const ImageModal = ({ selectedImg }) => {
             className={css.img}
           />
         </div>
-      )}
+      </Modal>
     </>
   );
 };
